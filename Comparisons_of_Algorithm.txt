@@ -2,98 +2,66 @@ Comparison of TSP Nearest-Neighbor, 2-opt First and SimulatedAnnealing
 
 
 Working with the dataset => data3
-Nearest-Neighbor: Final_Cost= 500,Time required= 1.5898e-05s
-Nearest-Neighbor with 2-opt: Final_Cost= 500,Time required= 1.1302e-05s
-SimulatedAnnealing: Final_Cost= 500,Time required= 0.0414201s
+SimulatedAnnealing: Final_Cost= 500,Time required= 0.0684546s
 
 
 Working with the dataset => data10
-Nearest-Neighbor: Final_Cost= 300,Time required= 1.192e-05s
-Nearest-Neighbor with 2-opt: Final_Cost= 273,Time required= 6.6958e-05s
-SimulatedAnnealing: Final_Cost= 243,Time required= 0.040072s
+SimulatedAnnealing: Final_Cost= 212,Time required= 0.0688671s
 
 
 Working with the dataset => data11
-Nearest-Neighbor: Final_Cost= 314,Time required= 1.0217e-05s
-Nearest-Neighbor with 2-opt: Final_Cost= 299,Time required= 8.8674e-05s
-SimulatedAnnealing: Final_Cost= 266,Time required= 0.0375554s
+SimulatedAnnealing: Final_Cost= 275,Time required= 0.0715275s
 
 
 Working with the dataset => data12
-Nearest-Neighbor: Final_Cost= 296,Time required= 8.887e-06s
-Nearest-Neighbor with 2-opt: Final_Cost= 296,Time required= 5.4257e-05s
-SimulatedAnnealing: Final_Cost= 296,Time required= 0.0377373s
+SimulatedAnnealing: Final_Cost= 296,Time required= 0.0680236s
 
 
 Working with the dataset => data13
-Nearest-Neighbor: Final_Cost= 301,Time required= 9.495e-06s
-Nearest-Neighbor with 2-opt: Final_Cost= 301,Time required= 5.5148e-05s
-SimulatedAnnealing: Final_Cost= 301,Time required= 0.0369146s
+SimulatedAnnealing: Final_Cost= 301,Time required= 0.084785s
 
 
 Working with the dataset => data14
-Nearest-Neighbor: Final_Cost= 304,Time required= 1.9192e-05s
-Nearest-Neighbor with 2-opt: Final_Cost= 203,Time required= 0.000331581s
-SimulatedAnnealing: Final_Cost= 203,Time required= 0.0401775s
+SimulatedAnnealing: Final_Cost= 237,Time required= 0.0716821s
 
 
 Working with the dataset => data15
-Nearest-Neighbor: Final_Cost= 291,Time required= 9.015e-06s
-Nearest-Neighbor with 2-opt: Final_Cost= 291,Time required= 0.000102607s
-SimulatedAnnealing: Final_Cost= 291,Time required= 0.036757s
+SimulatedAnnealing: Final_Cost= 291,Time required= 0.0680485s
 
 
 Working with the dataset => data16
-Nearest-Neighbor: Final_Cost= 344,Time required= 1.0711e-05s
-Nearest-Neighbor with 2-opt: Final_Cost= 275,Time required= 0.000198093s
-SimulatedAnnealing: Final_Cost= 275,Time required= 0.0396602s
+SimulatedAnnealing: Final_Cost= 241,Time required= 0.0699521s
 
 
 Working with the dataset => data17
-Nearest-Neighbor: Final_Cost= 2187,Time required= 1.828e-05s
-Nearest-Neighbor with 2-opt: Final_Cost= 2181,Time required= 0.000110994s
-SimulatedAnnealing: Final_Cost= 2088,Time required= 0.0372024s
+SimulatedAnnealing: Final_Cost= 2085,Time required= 0.0715533s
 
 
 Working with the dataset => data18
-Nearest-Neighbor: Final_Cost= 440,Time required= 9.814e-06s
-Nearest-Neighbor with 2-opt: Final_Cost= 300,Time required= 0.000214704s
-SimulatedAnnealing: Final_Cost= 288,Time required= 0.0373532s
+SimulatedAnnealing: Final_Cost= 280,Time required= 0.0693576s
 
 
 Working with the dataset => burma14
-Nearest-Neighbor: Final_Cost= 40,Time required= 9.474e-06s
-Nearest-Neighbor with 2-opt: Final_Cost= 33,Time required= 0.000221599s
-SimulatedAnnealing: Final_Cost= 30,Time required= 0.0379925s
+SimulatedAnnealing: Final_Cost= 30,Time required= 0.0661377s
 
 
 Working with the dataset => berlin52
-Nearest-Neighbor: Final_Cost= -1,Time required= 6.187e-06s
-Nearest-Neighbor with 2-opt: Final_Cost= -1,Time required= 3.996e-06s
-SimulatedAnnealing: Final_Cost= -1,Time required= 0.0347094s
+SimulatedAnnealing: Final_Cost= 8539,Time required= 0.0900737s
 
 
 Working with the dataset => eil76
-Nearest-Neighbor: Final_Cost= 642,Time required= 3.8722e-05s
-Nearest-Neighbor with 2-opt: Final_Cost= 615,Time required= 0.00942073s
-SimulatedAnnealing: Final_Cost= 612,Time required= 0.0639244s
+SimulatedAnnealing: Final_Cost= 629,Time required= 0.107565s
 
 
 Working with the dataset => ch130
-Nearest-Neighbor: Final_Cost= 7579,Time required= 8.4083e-05s
-Nearest-Neighbor with 2-opt: Final_Cost= 7484,Time required= 0.0196224s
-SimulatedAnnealing: Final_Cost= 7407,Time required= 0.0884278s
+SimulatedAnnealing: Final_Cost= 7458,Time required= 0.14481s
 
 
 Working with the dataset => a280
-Nearest-Neighbor: Final_Cost= 3157,Time required= 0.00028529s
-Nearest-Neighbor with 2-opt: Final_Cost= 3135,Time required= 0.277051s
-SimulatedAnnealing: Final_Cost= 3117,Time required= 0.393535s
+SimulatedAnnealing: Final_Cost= 3157,Time required= 0.24013s
 
 
 Working with the dataset => d657
-Nearest-Neighbor: Final_Cost= 3157,Time required= 0.000272968s
-Nearest-Neighbor with 2-opt: Final_Cost= 3135,Time required= 0.278514s
-SimulatedAnnealing: Final_Cost= 3126,Time required= 0.386945s
+SimulatedAnnealing: Final_Cost= 60734,Time required= 0.557782s
 
 

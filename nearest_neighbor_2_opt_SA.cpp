@@ -3,7 +3,7 @@
 using namespace std;
 
 int num_nodes;
-int edge_weight[1000][1000];
+int edge_weight[4000][4000];
 typedef vector<int> candidate;
 
 vector<int> path_swap(vector<int> path, int u, int v)
@@ -19,25 +19,35 @@ int calc_cost(vector<int> path)
 {
     int start_node=path[0];
     int init_start_node = start_node;
-  	//path.pop();
-  	int total_path_weight=0;
-  	int next_node;
-  	for(int i=0;i<num_nodes-1;i++)
-  	{
-  		next_node=path[i+1];
-  		total_path_weight+=edge_weight[start_node][next_node];
-  		//cout  << start_node<<" ";
-  		// printf("%d-%d: %d, %d\n",start_node,next_node,edge_weight[start_node][next_node],total_path_weight);
-  		start_node=next_node;
+    //path.pop();
+    int total_path_weight=0;
+    int next_node;
+    for(int i=0;i<num_nodes-1;i++)
+    {
+      next_node=path[i+1];
+      total_path_weight+=edge_weight[start_node][next_node];
+      //cout  << start_node<<" ";
+      //printf("%d-%d: %d, %d\n",start_node,next_node,edge_weight[start_node][next_node],total_path_weight);
+      start_node=next_node;
 
-  		//path.pop();
-  	}
-  	total_path_weight+=edge_weight[start_node][init_start_node];
-  	// printf("%d-%d: %d, %d\n",start_node,init_start_node,edge_weight[start_node][init_start_node],total_path_weight);
-  	//cout<<last_node<<endl;
-  	//printf("Total Path Cost= %d\n",total_path_weight);
-  	return total_path_weight;
+      //path.pop();
+    }
+    total_path_weight+=edge_weight[start_node][init_start_node];
+    //printf("%d-%d: %d, %d\n",start_node,init_start_node,edge_weight[start_node][init_start_node],total_path_weight);
+    //cout<<"-----"<<endl;
+    //cout<<last_node<<endl;
+    //printf("Total Path Cost= %d\n",total_path_weight);
+    return total_path_weight;
 }
+
+// void printPath(vector<int> path)
+// {
+//     for(int i=0; i<path.size(); i++)
+//     {
+//         cout<<path[i]<<"->";
+//     }
+//     cout<<path[0]<<endl;
+// }
 
 vector<int> twoOpt(vector<int> path, int cost)
 {
@@ -107,14 +117,14 @@ candidate nn_2_opt(int option,int &cst){
       path.push_back(start_node);
 
     }
-    //path.push(init_start_node);
 
     int final_cost = calc_cost(path);
-    // cout << final_cost << endl;
+    
 
     
     if(option == 1){
       //Compute greedy only
+      // cout << final_cost << endl;
       cst = final_cost;
       return path;
     }
@@ -137,7 +147,7 @@ public:
     candidate best,current;
     double minTour_Cost,current_Cost,candidate_cost;
     double Temp = sqrt(num_nodes);
-    double Stopping_Temp = 0.01;
+    double Stopping_Temp = 0.0000001;
     double maxIter = 5000;
     double expP,p,deltaE;
 
@@ -159,11 +169,11 @@ public:
         double p = (rand() / (RAND_MAX + 1.0));
         return p;
     }
-    bool accept(candidate C, double T){
+    bool metropolis_accept(candidate C, double T){
       this->candidate_cost = calc_cost(C);
       deltaE = candidate_cost - this->current_Cost;
       if(deltaE < 0.0){
-        // printf("From here %d, %d\n",candidate_cost,current_Cost);
+        
         return true;
       }
       else{
@@ -181,8 +191,9 @@ public:
     }
     void SA_sim(int &cst){
       
-      // int cst= -1;
-      this->current = nn_2_opt(2,cst);
+     
+      this->current = nn_2_opt(1,cst);
+
       this->best = this->current;
       this->minTour_Cost = calc_cost(current);
       this->current_Cost = this->minTour_Cost;
@@ -191,11 +202,13 @@ public:
       bool decision;
       double T= this->Temp;
       int iter = 0;
-      for(T = Temp,iter=0; Temp > Stopping_Temp && iter < maxIter; T*=0.5,iter++){
-        // cout << T << endl;
-        for(int j = 0; j < 10; j++){
+      int cnt = 0;
+      for(T = this->Temp,iter=0; T > Stopping_Temp && iter < maxIter; T*=0.98,iter++){
+        // cout << cnt << endl;
+        // cnt++;
+        for(int j = 0; j < 100; j++){
             candidate C = generate_Rand_tour(current);
-            decision = accept(C,T);
+            decision = metropolis_accept(C,T);
             if(decision){
               // cout << "here" << " ";
               
@@ -215,11 +228,22 @@ public:
       // cout << minTour_Cost << endl;
       // printPath(best);
       cst = minTour_Cost;
-
+      printf("%d\n",cst);
 
     }
 
 };
+
+void print_Arr(int a[],int len){
+  for(int i = 0; i < len; i++){
+    cout << a[i] << endl;
+  }
+}
+void print_Time(double a[],int len){
+  for(int i = 0; i < len; i++){
+    cout << a[i] << endl;
+  }
+}
 
 int main()
 {
@@ -229,9 +253,9 @@ int main()
     chrono::duration<double> elapsedSeconds;
     //take input from file
     string data_[] = {"data3","data10","data11","data12","data13","data14","data15",
-            "data16","data17","data18","burma14","berlin52","eil76","ch130","a280",
-            "d657"};
-    // string data_[] = {"d1655","d2103"};
+            "data16","data17","data18","burma14","berlin52","eil76","ch130","a280","d657"};
+      // ,"d1291","d1655","d2103"      
+    // string data_[] = {"burma14"};
 
     ofstream out_file;
     out_file.open("Comparisons_of_Algorithm.txt");
@@ -239,6 +263,14 @@ int main()
     out_file <<endl;
     out_file << endl;
     int len = sizeof(data_)/sizeof(data_[0]);
+
+    int cst_NN[len];
+    int cst_NN_2opt[len];
+    int cst_SA[len];
+    double time_NN[len];
+    double time_NN_2opt[len];
+    double time_SA[len];
+
     for(int k = 0; k < len; k++){
       cout << "Working on->" << data_[k] << endl;
       string inp_file = "Data_For_TSP/"+data_[k]+"_vertical.txt";
@@ -264,25 +296,29 @@ int main()
       
       int cst= -1;
       
-      start = chrono::system_clock::now();
+      // start = chrono::system_clock::now();
 
-      nn_2_opt(1,cst);
-      cout << "NN COST->" << cst << endl;
-      end = chrono::system_clock::now();
-      elapsedSeconds = end - start;
+      // nn_2_opt(1,cst);
+      // // cout << "NN COST->" << cst << endl;
+      // end = chrono::system_clock::now();
+      // elapsedSeconds = end - start;
+      // cst_NN[k] = cst;
+      // time_NN[k] = elapsedSeconds.count();
+      // // cout << "time in seconds->" << elapsedSeconds.count() << "s" <<endl;
+      // out_file << "Nearest-Neighbor: Final_Cost= " << cst << ",Time required= " << elapsedSeconds.count() << "s" <<endl;
+      // cout << "Nearest-Neighbor: Final_Cost= " << cst << ",Time required= " << elapsedSeconds.count() << "s" <<endl;
 
-      // cout << "time in seconds->" << elapsedSeconds.count() << "s" <<endl;
-      out_file << "Nearest-Neighbor: Final_Cost= " << cst << ",Time required= " << elapsedSeconds.count() << "s" <<endl;
+      // start = chrono::system_clock::now();
 
-      start = chrono::system_clock::now();
-
-      nn_2_opt(2,cst);
-      cout << "NN 2-opt COST->" << cst << endl;
-      end = chrono::system_clock::now();
-      elapsedSeconds = end - start;
-
-      // cout << "time in seconds->" << elapsedSeconds.count() << "s" <<endl;
-      out_file << "Nearest-Neighbor with 2-opt: Final_Cost= " << cst << ",Time required= " << elapsedSeconds.count() << "s" <<endl;
+      // nn_2_opt(2,cst);
+      // // cout << "NN 2-opt COST->" << cst << endl;
+      // end = chrono::system_clock::now();
+      // elapsedSeconds = end - start;
+      // cst_NN_2opt[k] = cst;
+      // time_NN_2opt[k] = elapsedSeconds.count();
+      // // cout << "time in seconds->" << elapsedSeconds.count() << "s" <<endl;
+      // out_file << "Nearest-Neighbor with 2-opt: Final_Cost= " << cst << ",Time required= " << elapsedSeconds.count() << "s" <<endl;
+      // cout << "Nearest-Neighbor with 2-opt: Final_Cost= " << cst << ",Time required= " << elapsedSeconds.count() << "s" <<endl;
       
 
       start = chrono::system_clock::now();
@@ -291,14 +327,34 @@ int main()
       end = chrono::system_clock::now();
       elapsedSeconds = end - start;
 
+      cst_SA[k] = cst;
+      time_SA[k] = elapsedSeconds.count();
       // cout << "time in seconds->" << elapsedSeconds.count() << "s" <<endl;
       out_file << "SimulatedAnnealing: Final_Cost= " << cst << ",Time required= " << elapsedSeconds.count() << "s" <<endl;
+      cout << "SimulatedAnnealing: Final_Cost= " << cst << ",Time required= " << elapsedSeconds.count() << "s" <<endl;
       
       out_file <<endl;
       out_file <<endl;
 
 
     }
+    // printf("Cost NN\n");
+    // print_Arr(cst_NN,len);
+
+    // printf("Cost NN-2opt\n");
+    // print_Arr(cst_NN_2opt,len);
+    
+    // printf("Cost SA\n");
+    // print_Arr(cst_SA,len);
+    
+    // printf("Time NN\n");
+    // print_Time(time_NN,len);
+    
+    // printf("Time NN-2opt\n");
+    // print_Time(time_NN_2opt,len);
+    
+    // printf("Time SA\n");
+    // print_Time(time_SA,len);
     
     // nn_2_opt(1);
 

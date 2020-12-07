@@ -1,3 +1,0 @@
-/home/shashata/Documents/SA/TSP/BruteForceAlgorithmsTSP/build/CMakeFiles/rebuild_cache.dir
-/home/shashata/Documents/SA/TSP/BruteForceAlgorithmsTSP/build/CMakeFiles/PEA.dir
-/home/shashata/Documents/SA/TSP/BruteForceAlgorithmsTSP/build/CMakeFiles/edit_cache.dir

@@ -3,14 +3,14 @@ from pprint import pprint
 # from anneal import SimAnneal
 
 def input_reader_and_maker():
-	data = "d657"
+	data = "d1291"
 	problem = tsplib95.load("tsplib/"+data+".tsp")
 	data = "Data_For_TSP/"+data
 	# print(list(problem.get_nodes()))
 	# dct= problem.as_name_dict()
 	open(data+"_vertical.txt","w")
 	nodes = len(list(problem.get_nodes()))
-	with open(data+"_vertical_sp.txt","a+") as fl:
+	with open(data+"_vertical.txt","a+") as fl:
 		
 		fl.write(str(nodes)+"\n")
 
@@ -20,8 +20,8 @@ def input_reader_and_maker():
 					continue
 
 				wgt = tsplib95.distances.euclidean(problem.node_coords[i],problem.node_coords[j])
-				fl.write(str(i)+" "+str(j)+" "+str(wgt)+"\n")
-				# fl.write(str(j)+" "+str(i)+" "+str(wgt)+"\n")
+				fl.write(str(i-1)+" "+str(j-1)+" "+str(wgt)+"\n")
+				fl.write(str(j-1)+" "+str(i-1)+" "+str(wgt)+"\n")
 	
 	# dct= problem.as_name_dict()
 	# coords = dct["node_coords"]
