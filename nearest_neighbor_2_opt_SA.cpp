@@ -42,6 +42,9 @@ int calc_cost(vector<int> path)
 vector<int> twoOpt(vector<int> path, int cost)
 {
     //vector<int> final_path = path;
+    //printPath(path);
+    //cout<<cost<<endl;
+    bool isCalled = false;
     for(int i=0; i<num_nodes-2; i++)
     {
         for(int j=i+2; j<num_nodes; j++)
@@ -51,13 +54,17 @@ vector<int> twoOpt(vector<int> path, int cost)
 
             if(new_cost<cost)
             {
+                //cout<<cost<<"->"<<new_cost<<endl;
                 path = twoOpt(new_path, new_cost);
+                isCalled = true;
                 break;
             }
         }
+        if(isCalled) break;
     }
     return path;
 }
+
 
 void printPath(vector<int> path)
 {
@@ -68,7 +75,7 @@ void printPath(vector<int> path)
     cout<<path[0]<<endl;
 }
 
-candidate nn_2_opt(int verbose){
+candidate nn_2_opt(int option,int &cst){
 
     int start_node=0;
     int init_start_node = start_node;
@@ -103,16 +110,26 @@ candidate nn_2_opt(int verbose){
     //path.push(init_start_node);
 
     int final_cost = calc_cost(path);
-    cout << final_cost << endl;
+    // cout << final_cost << endl;
 
     
-    if(verbose == 1){
+    if(option == 1){
+      //Compute greedy only
+      cst = final_cost;
+      return path;
+    }
+    else if(option == 2){
+      //Compute 2-opt over greedy
+
       vector<int> final_path = twoOpt(path, final_cost);
       final_cost = calc_cost(final_path);
-      printPath(final_path);
-      cout<<"Total Final Cost: " << final_cost << endl;
+      // printPath(final_path);
+      cst = final_cost;
+      // cout<<"Total Final Cost: " << final_cost << endl;
+      return final_path;
     }
-    return path;
+    
+    
 }
 
 class SimulatedAnnealing {
@@ -162,16 +179,14 @@ public:
       }
 
     }
-    void SA_sim(){
+    void SA_sim(int &cst){
       
-
-      this->current = nn_2_opt(2);
+      // int cst= -1;
+      this->current = nn_2_opt(2,cst);
       this->best = this->current;
       this->minTour_Cost = calc_cost(current);
       this->current_Cost = this->minTour_Cost;
       
-
-
       // double p,expP,deltaE;
       bool decision;
       double T= this->Temp;
@@ -197,8 +212,9 @@ public:
             
         }
       }
-      cout << minTour_Cost << endl;
-      printPath(best);
+      // cout << minTour_Cost << endl;
+      // printPath(best);
+      cst = minTour_Cost;
 
 
     }
@@ -209,32 +225,84 @@ int main()
 {
     //setting all the edge weights to -1
     memset(edge_weight, -1, sizeof(edge_weight));
-
+    chrono::time_point<chrono::system_clock> start, end;
+    chrono::duration<double> elapsedSeconds;
     //take input from file
-    // string inp_file = "Data_For_TSP/eil76_vertical.txt";
-    string inp_file = "input1.txt";
-    ifstream myfile(inp_file);
-    string line;
-    int nodeNo;
+    string data_[] = {"data3","data10","data11","data12","data13","data14","data15",
+            "data16","data17","data18","burma14","berlin52","eil76","ch130","a280",
+            "d657"};
+    // string data_[] = {"d1655","d2103"};
 
-    getline(myfile, line);
-    istringstream is(line);
-    is>>num_nodes;
+    ofstream out_file;
+    out_file.open("Comparisons_of_Algorithm.txt");
+    out_file << "Comparison of TSP Nearest-Neighbor, 2-opt First and SimulatedAnnealing" << endl;
+    out_file <<endl;
+    out_file << endl;
+    int len = sizeof(data_)/sizeof(data_[0]);
+    for(int k = 0; k < len; k++){
+      cout << "Working on->" << data_[k] << endl;
+      string inp_file = "Data_For_TSP/"+data_[k]+"_vertical.txt";
+      out_file <<"Working with the dataset => " << data_[k] << endl;
+      // string inp_file = "data.txt";
+      ifstream myfile(inp_file);
+      string line;
+      int nodeNo;
 
-    while(!myfile.eof()){
       getline(myfile, line);
-      int i,j,cost;
-      istringstream is1(line);
-      is1>>i>>j>>cost;
+      istringstream is(line);
+      is>>num_nodes;
 
-      edge_weight[i][j] = cost;
+      while(!myfile.eof()){
+        getline(myfile, line);
+        int i,j,cost;
+        istringstream is1(line);
+        is1>>i>>j>>cost;
+
+        edge_weight[i][j] = cost;
+      }
+      myfile.close();
+      
+      int cst= -1;
+      
+      start = chrono::system_clock::now();
+
+      nn_2_opt(1,cst);
+      cout << "NN COST->" << cst << endl;
+      end = chrono::system_clock::now();
+      elapsedSeconds = end - start;
+
+      // cout << "time in seconds->" << elapsedSeconds.count() << "s" <<endl;
+      out_file << "Nearest-Neighbor: Final_Cost= " << cst << ",Time required= " << elapsedSeconds.count() << "s" <<endl;
+
+      start = chrono::system_clock::now();
+
+      nn_2_opt(2,cst);
+      cout << "NN 2-opt COST->" << cst << endl;
+      end = chrono::system_clock::now();
+      elapsedSeconds = end - start;
+
+      // cout << "time in seconds->" << elapsedSeconds.count() << "s" <<endl;
+      out_file << "Nearest-Neighbor with 2-opt: Final_Cost= " << cst << ",Time required= " << elapsedSeconds.count() << "s" <<endl;
+      
+
+      start = chrono::system_clock::now();
+      SimulatedAnnealing SA;
+      SA.SA_sim(cst);
+      end = chrono::system_clock::now();
+      elapsedSeconds = end - start;
+
+      // cout << "time in seconds->" << elapsedSeconds.count() << "s" <<endl;
+      out_file << "SimulatedAnnealing: Final_Cost= " << cst << ",Time required= " << elapsedSeconds.count() << "s" <<endl;
+      
+      out_file <<endl;
+      out_file <<endl;
+
+
     }
-    myfile.close();
-
+    
     // nn_2_opt(1);
 
-    SimulatedAnnealing SA;
-    SA.SA_sim();
+    
 
    
 }

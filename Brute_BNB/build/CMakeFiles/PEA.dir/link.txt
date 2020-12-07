@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/PEA.dir/BruteForce.cpp.o CMakeFiles/PEA.dir/main.cpp.o CMakeFiles/PEA.dir/Matrix.cpp.o CMakeFiles/PEA.dir/Solution.cpp.o CMakeFiles/PEA.dir/BranchAndBound.cpp.o CMakeFiles/PEA.dir/Dynamic.cpp.o CMakeFiles/PEA.dir/Menu.cpp.o -o PEA 
